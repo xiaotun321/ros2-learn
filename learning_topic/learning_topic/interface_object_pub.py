@@ -26,8 +26,10 @@ class ImageSubscriber(Node):
         super().__init__(name)                                  # ROS2节点父类初始化
         self.sub = self.create_subscription(
             Image, 'image_raw', self.listener_callback, 10)     # 创建订阅者对象（消息类型、话题名、订阅者回调函数、队列长度）
+        
         self.pub = self.create_publisher(
             ObjectPosition, "object_position", 10)              # 创建发布者对象（消息类型、话题名、队列长度）
+        
         self.cv_bridge = CvBridge()                             # 创建一个图像转换对象，用于OpenCV图像与ROS的图像消息的互相转换
 
         self.objectX = 0
@@ -63,8 +65,8 @@ class ImageSubscriber(Node):
         self.pub.publish(position)                              # 发布目标位置
 
 def main(args=None):                                        # ROS2节点主入口main函数
-    rclpy.init(args=args)                                   # ROS2 Python接口初始化
-    node = ImageSubscriber("topic_webcam_sub")              # 创建ROS2节点对象并进行初始化
+    rclpy.init(args=args)                                   # 1、ROS2 Python接口初始化
+    node = ImageSubscriber("topic_webcam_sub")              # 2、创建ROS2节点对象并进行初始化
     rclpy.spin(node)                                        # 循环等待ROS2退出
     node.destroy_node()                                     # 销毁节点对象
     rclpy.shutdown()                                        # 关闭ROS2 Python接口

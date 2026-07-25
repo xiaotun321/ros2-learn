@@ -5,3 +5,7 @@ int64 b        # 第二个加数
 
 # 应答数据
 int64 sum      # 求和结果
+
+# ros2 编译这套接口的时候，自动生成两套类
+# 1、请求结构体： AddTwoInts.Request
+# 2、响应结构体： AddTwoInts.Response

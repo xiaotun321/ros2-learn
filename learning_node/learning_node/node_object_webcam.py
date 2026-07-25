@@ -11,6 +11,7 @@ from rclpy.node import Node             # ROS2 节点类
 
 import cv2                              # OpenCV图像处理库
 import numpy as np                      # Python数值计算库
+import time
 
 lower_red = np.array([0, 90, 128])     # 红色的HSV阈值下限
 upper_red = np.array([180, 255, 255])  # 红色的HSV阈值上限
@@ -35,16 +36,17 @@ def object_detect(image):
 def main(args=None):                                                       # ROS2节点主入口main函数
     rclpy.init(args=args)                                                  # ROS2 Python接口初始化
     node = Node("node_object_webcam")                                      # 创建ROS2节点对象并进行初始化
-    node.get_logger().info("ROS2节点示例：检测图像中的苹果")
+    node.get_logger().info("ROS2节点示例：检测图像中的苹果1")
 
     cap = cv2.VideoCapture(0)
 
     
-    while rclpy.ok():
+    while rclpy.ok():                    # ROS2系统是否正常运行
         ret, image = cap.read()          # 读取一帧图像
          
         if ret == True:
             object_detect(image)          # 苹果检测
+            time.sleep(0.03)   # 限制大约30FPS
         
     node.destroy_node()                  # 销毁节点对象
     rclpy.shutdown()                     # 关闭ROS2 Python接口

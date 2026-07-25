@@ -21,10 +21,10 @@ class ImageSubscriber(Node):
     def __init__(self, name):
         super().__init__(name)                                          # ROS2节点父类初始化
         self.sub = self.create_subscription(
-            Image, 'image_raw', self.listener_callback, 10)             # 创建订阅者对象（消息类型、话题名、订阅者回调函数、队列长度）
+            Image, 'image_raw', self.listener_callback, 10)             # 2.1、创建订阅者对象（消息类型、话题名、订阅者回调函数、队列长度）
         self.cv_bridge = CvBridge()                                     # 创建一个图像转换对象，用于OpenCV图像与ROS的图像消息的互相转换
 
-        self.srv = self.create_service(GetObjectPosition,               # 创建服务器对象（接口类型、服务名、服务器回调函数）
+        self.srv = self.create_service(GetObjectPosition,               # 2.2、创建服务器对象（接口类型、服务名、服务器回调函数）
                                        'get_target_position',
                                        self.object_position_callback)    
         self.objectX = 0
@@ -56,8 +56,8 @@ class ImageSubscriber(Node):
         image = self.cv_bridge.imgmsg_to_cv2(data, 'bgr8')            # 将ROS的图像消息转化成OpenCV图像
         self.object_detect(image)                                      # 苹果检测
 
-    def object_position_callback(self, request, response):            # 创建回调函数，执行收到请求后对数据的处理
-        if request.get == True:
+    def object_position_callback(self, request, response):            # 3、创建回调函数，执行收到请求后对数据的处理
+        if request.get == True:                                       # 收到客户端接发来请求命令
             response.x = self.objectX                                 # 目标物体的XY坐标
             response.y = self.objectY
             self.get_logger().info('Object position\nx: %d y: %d' %
@@ -70,8 +70,8 @@ class ImageSubscriber(Node):
 
 
 def main(args=None):                                 # ROS2节点主入口main函数
-    rclpy.init(args=args)                            # ROS2 Python接口初始化
-    node = ImageSubscriber("service_object_server")  # 创建ROS2节点对象并进行初始化
+    rclpy.init(args=args)                            # 1、ROS2 Python接口初始化
+    node = ImageSubscriber("service_object_server")  # 2、创建ROS2节点对象并进行初始化
     rclpy.spin(node)                                 # 循环等待ROS2退出
     node.destroy_node()                              # 销毁节点对象
     rclpy.shutdown()                                 # 关闭ROS2 Python接口
