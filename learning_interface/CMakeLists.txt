@@ -22,6 +22,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
+# 声明要编译的接口文件
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/ObjectPosition.msg"
   "srv/AddTwoInts.srv"

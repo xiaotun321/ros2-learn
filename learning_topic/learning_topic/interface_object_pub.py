@@ -28,7 +28,7 @@ class ImageSubscriber(Node):
             Image, 'image_raw', self.listener_callback, 10)     # 创建订阅者对象（消息类型、话题名、订阅者回调函数、队列长度）
         
         self.pub = self.create_publisher(
-            ObjectPosition, "object_position", 10)              # 创建发布者对象（消息类型、话题名、队列长度）
+            ObjectPosition, "object_position", 10)              # 创建发布者对象（消息类型(自定义)、话题名、队列长度）
         
         self.cv_bridge = CvBridge()                             # 创建一个图像转换对象，用于OpenCV图像与ROS的图像消息的互相转换
 
