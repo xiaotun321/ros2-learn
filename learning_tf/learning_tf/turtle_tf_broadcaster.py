@@ -18,7 +18,7 @@ class TurtleTFBroadcaster(Node):
     def __init__(self, name):
         super().__init__(name)                                # ROS2节点父类初始化
 
-        self.declare_parameter('turtlename', 'turtle')        # 创建一个海龟名称的参数
+        self.declare_parameter('turtlename', 'turtle')        # 创建(声明)一个海龟名称的参数，键名turtlename，并设置参数的默认值
         self.turtlename = self.get_parameter(                 # 优先使用外部设置的参数值，否则用默认值
             'turtlename').get_parameter_value().string_value
 
@@ -49,7 +49,7 @@ class TurtleTFBroadcaster(Node):
 
 def main(args=None):
     rclpy.init(args=args)                                # ROS2 Python接口初始化
-    node = TurtleTFBroadcaster("turtle_tf_broadcaster")  # 创建ROS2节点对象并进行初始化
+    node = TurtleTFBroadcaster("turtle_tf_broadcaster")  # 1、创建ROS2节点对象并进行初始化
     rclpy.spin(node)                                     # 循环等待ROS2退出
     node.destroy_node()                                  # 销毁节点对象
     rclpy.shutdown()                                     # 关闭ROS2 Python接口
